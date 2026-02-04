@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founders CP Bot - Empowering Founders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            border-bottom: 1px solid #eee;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 18px;
+            max-width: 70%;
+        }
+
+        .user-message {
+            background: #007bff;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bot-message {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 20px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            padding: 12px 24px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background: #218838;
+        }
+
+        h2 {
+            color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🤖 Founders CP Bot</h1>
+        <p>Your AI companion for startup success – lead gen, funding advice, GTM strategies & more!</p>
+    </header>
+
+    <section>
+        <h2>How Founders CP Bot Helps Founders</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>🚀 Lead Generation</h3>
+                <p>Automatically find and qualify B2B leads using AI agents, just like Revspot's tools.</p>
+                [cite:1][web:13]
+            </div>
+            <div class="feature">
+                <h3>💰 Funding Workflows</h3>
+                <p>Get personalized pitch decks, investor scouting, and deal analysis to accelerate funding.</p>[cite:1]
+            </div>
+            <div class="feature">
+                <h3>📈 GTM Acceleration</h3>
+                <p>Build go-to-market strategies, validate ideas, and optimize revenue ops with AI insights.</p>
+                [cite:1][web:13]
+            </div>
+            <div class="feature">
+                <h3>⚡ Automation</h3>
+                <p>Integrate with n8n, AWS, and your stack for seamless workflows and MVP building.</p>
+                [user-information]
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Try the Demo Chat</h2>
+        <p>Interact with a basic simulation of Founders CP Bot to see it in action.</p>[web:5][web:14]
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">Hi Founder! I'm Founders CP Bot. Ask me about leads, funding, or GTM
+                    tips!</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput"
+                    placeholder="Type your question... (e.g., 'How to generate leads?')">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const responses = {
+            'leads': 'Founders CP Bot uses AI agents to scrape, qualify, and enrich leads – integrated with Revspot for B2B magic. Want a workflow example?[cite:13]',
+            'funding': 'I can scout investors, craft pitches, and analyze terms. Start with your stage: pre-seed? Check fundrs-openbot for open-source tools![cite:1]',
+            'gtm': 'GTM tips: Validate MVP fast, use n8n for automation, focus on high-ticket B2C/B2B. Need a 12-week plan?[user-information]',
+            'default': 'Great question! Founders CP Bot helps with AI-driven startup tasks. Try asking about "leads", "funding", or "GTM".'
+        };
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const messages = document.getElementById('chatMessages');
+            const message = input.value.trim().toLowerCase();
+
+            if (!message) return;
+
+            // User message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user-message';
+            userDiv.textContent = input.value;
+            messages.appendChild(userDiv);
+
+            // Bot response
+            setTimeout(() => {
+                let botResponse = responses.default;
+                for (const key in responses) {
+                    if (message.includes(key)) {
+                        botResponse = responses[key];
+                        break;
+                    }
+                }
+                const botDiv = document.createElement('div');
+                botDiv.className = 'message bot-message';
+                botDiv.innerHTML = botResponse;
+                messages.appendChild(botDiv);
+                messages.scrollTop = messages.scrollHeight;
+            }, 500);
+
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        document.getElementById('messageInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+
+</html>
